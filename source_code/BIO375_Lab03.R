@@ -104,13 +104,7 @@ summary(compensation)
 # var_resp = var(<response_variable_name>)
 # )
 
-summ_root <- compensation %>%
-  group_by(Grazing) %>%
-  summarise(mean_Root = mean(Root),
-            median_Root = median(Root),
-            IQR_Root = IQR(Root),
-            sd_Root = sd(Root),
-            var_Root = var(Root))
+
 
 
 # Using descr() ####
