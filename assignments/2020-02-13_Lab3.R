@@ -102,7 +102,11 @@ ggplot(lovett)+
   
 ggplot(lovett) +
   geom_histogram(aes(SO4MOD), binwidth = 5)
-  
+
+
+### Great job annotating your code! 
+# IN the future, you might want to modify your binwidths a little
+### GRADE: 10/10 code runs without breaking ####  
 
 
 
