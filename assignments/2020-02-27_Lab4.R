@@ -112,5 +112,94 @@ ggplot(data = mpg) +
   facet_grid(drv ~ cyl)
 
 # 1. What happens if you facet on a continuous variable?
+ggplot(mpg, aes(x = year, y = cyl)) +
+  geom_point() +
+  facet_grid(. ~ cty)
+# When you facet on a continuous variable it makes a really ugly scatter plot. It makes a facet for every single value.
+
+# 2. What do the empty cells in plot with facet_grid(drv ~ cyl) mean? How do they relate to this plot?
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = drv, y = cyl))
+# I think the empty cells mean that there was no observations of the combination of cyl and drv categories.
+
+# 3. What plots does the following code make? What does . do?
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl)
+# The . seems to define which variable goes on which axis or the orientation of the graph. 
+
+# 4. What are the advantages to using faceting instead of the colour aesthetic? What are the disadvantages? 
+# How might the balance change if you had a larger dataset?
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class, nrow = 2)
+# Sometimes when you use colors or a scale of colors it might be hard to distinguish one color from another.
+# Having them separated into their own groups can make it easier to see trends for each type
+# However sometimes it might be helpful to have all of the data on one graph, making separation by color really helpful.
+
+# 5. Read ?facet_wrap. What does nrow do? What does ncol do? What other options control the layout of the individual panels? 
+# Why doesn’t facet_grid() have nrow and ncol arguments?
+# nrow and ncol seem to control the number of rows and columns in a facet. 
+
+# 6. When using facet_grid() you should usually put the variable with more unique levels in the columns. Why?
+# There would be more space in columns for the variabls that have more unique levels. 
+
+### 3.6 Geometric Objects
+
+# left
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+
+# right
+ggplot(data = mpg) + 
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+
+ggplot(data = mpg) + 
+  geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv))
+
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, group = drv))
+
+ggplot(data = mpg) +
+  geom_smooth(
+    mapping = aes(x = displ, y = hwy, color = drv),
+    show.legend = FALSE
+  )
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+
+
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  geom_smooth()
+
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color = class)) + 
+  geom_smooth()
+
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color = class)) + 
+  geom_smooth(data = filter(mpg, class == "subcompact"), se = FALSE)
+
+# 1. What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?
+# geom_line(), geom_boxplot(), geom_histogram(), geom_area()
+
+# 2. Run this code
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+
+# What does show.legend = FALSE do? What happens if you remove it?  Why do you think I used it earlier in the chapter?
+
+
 
 
