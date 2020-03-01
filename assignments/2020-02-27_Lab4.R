@@ -198,8 +198,99 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) +
   geom_point() + 
   geom_smooth(se = FALSE)
 
-# What does show.legend = FALSE do? What happens if you remove it?  Why do you think I used it earlier in the chapter?
+# 3. What does show.legend = FALSE do? What happens if you remove it?  Why do you think I used it earlier in the chapter?
+# To see what show.legend = FALSE does I briefly changed it in the script I wrote earlier to "TRUE".
+# I noticed that when it = FALSE, the figure legend on the right of the graph goes away.
+# I honestly don't know why a legend wouldn't be used in this graph because it helps you understand what line reperesents each characteristic
 
+# 4. What does the se argument to geom_smooth() do?
+# se stands for standard error so when you put se = TRUE, it adds a grayish standard error underlay to the graph.
+# When you have se = FALSE, the stardard error is not shown.
 
+# 5. Will these two graphs look different? Why/why not?
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  geom_smooth()
 
+ggplot() + 
+  geom_point(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_smooth(data = mpg, mapping = aes(x = displ, y = hwy))
+
+# No these two graphs do not lok different.
+# The data is inserted in different spots in the script of the two graphs but it performs the same function.
+
+# 6. Recreate the R code necessary to generate the following graphs.
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  geom_smooth(se = FALSE)
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_smooth(mapping = aes(group = drv), se = FALSE) +
+  geom_point()
+
+ggplot(mpg, aes(x = displ, y = hwy, colour = drv)) +
+  geom_point() +
+  geom_smooth(se = FALSE)
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(colour = drv)) +
+  geom_smooth(se = FALSE)
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(colour = drv)) +
+  geom_smooth(aes(linetype = drv), se = FALSE)
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(size = 4, color = "white") +
+  geom_point(aes(colour = drv))
+
+### 3.7 Statistical Transformations
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut))
+
+ggplot(data = diamonds) + 
+  stat_count(mapping = aes(x = cut))
+
+demo <- tribble(
+  ~cut,         ~freq,
+  "Fair",       1610,
+  "Good",       4906,
+  "Very Good",  12082,
+  "Premium",    13791,
+  "Ideal",      21551
+)
+
+ggplot(data = demo) +
+  geom_bar(mapping = aes(x = cut, y = freq), stat = "identity")
+
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, y = stat(prop), group = 1))
+
+ggplot(data = diamonds) + 
+  stat_summary(
+    mapping = aes(x = cut, y = depth),
+    fun.ymin = min,
+    fun.ymax = max,
+    fun.y = median
+  )
+
+# 1. What is the default geom associated with stat_summary()? 
+# How could you rewrite the previous plot to use that geom function instead of the stat function?
+
+# I used the help center for this question. When I searched stat_summary it said geom = "pointrange"
+ggplot(data = diamonds) + 
+  stat_summary(
+    mapping = aes(x = cut, y = depth),
+    fun.ymin = min,
+    fun.ymax = max,
+    fun.y = median
+  )
+
+# 2. What does geom_col() do? How is it different to geom_bar()?
+#  geom_bar makes the heigh of the bar proportional to the number of cases in each group. geom_col makes the heights of the bars represent values in the data.
+
+# 3. Most geoms and stats come in pairs that are almost always used in concert.
+# Read through the documentation and make a list of all the pairs. What do they have in common?
+  
+  
 
