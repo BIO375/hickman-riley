@@ -291,6 +291,65 @@ ggplot(data = diamonds) +
 
 # 3. Most geoms and stats come in pairs that are almost always used in concert.
 # Read through the documentation and make a list of all the pairs. What do they have in common?
-  
-  
+# I found these by reading the section, searching the geom_*** in the help section and reading the equivalent stat under the usage section
+# geom_bar & stat_count
+# geom_pointrange & stat_summary
+# geom_point & stat_identity
+# geom_smooth & stat_smooth
+
+
+# 4. What variables does stat_smooth() compute? What parameters control its behavior?
+# stat_smooth computes y, ymin, ymax, and se. The method and formula control it's behavior.
+
+#5. In our proportion bar chart, we need to set group = 1. Why? In other words what is the problem with these two graphs?
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, y = ..prop.., group = 1))
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = color, y = ..prop.., group = 1))
+# When I ran the code above without group = 1 included, all of the bars were the same height.
+# Now that the code does have group = 1 it shows the proper height of the bars to correspond with data.
+
+### 3.8 Position Adjustments
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, colour = cut))
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = cut))
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity))
+ggplot(data = diamonds, mapping = aes(x = cut, fill = clarity)) + 
+  geom_bar(alpha = 1/5, position = "identity")
+ggplot(data = diamonds, mapping = aes(x = cut, colour = clarity)) + 
+  geom_bar(fill = NA, position = "identity")
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill")
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy), position = "jitter")
+
+# 1. What is the problem with this plot? How could you improve it?
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + 
+  geom_point()
+# The issue with this plot is that it has overplotting - so basically points are all in a straight line and it's hard to tell where the spread of the data is at
+# I think the jitter setting can help fix this.
+
+# 2. What parameters to geom_jitter() control the amount of jittering?
+# From the help section, I have gathered that you can change the height and width to change the jitter.
+
+# 3. Compare and contrast geom_jitter() with geom_count().
+# geom_jitter is a shortcut for geom_point and is helpful with overplotting problems
+# geom_count counts the number of observations at each location
+
+# 4. What’s the default position adjustment for geom_boxplot()? Create a visualisation of the mpg dataset that demonstrates it.
+ggplot(data = mpg, aes(x = displ, y = hwy)) +
+  geom_boxplot()
+
+### 3.9 Coordinate Systems
+ggplot(data = mpg, mapping = aes(x = class, y = hwy)) + 
+  geom_boxplot()
+ggplot(data = mpg, mapping = aes(x = class, y = hwy)) + 
+  geom_boxplot() +
+  coord_flip()
+nz <- map_data("nz")
+
 
