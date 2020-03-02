@@ -350,6 +350,48 @@ ggplot(data = mpg, mapping = aes(x = class, y = hwy)) +
 ggplot(data = mpg, mapping = aes(x = class, y = hwy)) + 
   geom_boxplot() +
   coord_flip()
+
 nz <- map_data("nz")
+
+ggplot(nz, aes(long, lat, group = group)) +
+  geom_polygon(fill = "white", colour = "black")
+
+ggplot(nz, aes(long, lat, group = group)) +
+  geom_polygon(fill = "white", colour = "black") +
+  coord_quickmap()
+
+bar <- ggplot(data = diamonds) + 
+  geom_bar(
+    mapping = aes(x = cut, fill = cut), 
+    show.legend = FALSE,
+    width = 1
+  ) + 
+  theme(aspect.ratio = 1) +
+  labs(x = NULL, y = NULL)
+
+bar + coord_flip()
+bar + coord_polar()
+
+# 1. Turn a stacked bar chart into a pie chart using coord_polar().
+
+
+# 2. What does labs() do? Read the documentation.
+# According to the help tab, labs modifies axis, legend and plot labels
+
+# 3. What’s the difference between coord_quickmap() and coord_map()?
+# Help tab says that coord_map projects a portion of the earth onto a flat 2D plane.
+# coord_quickmap is a fast approximation that does preserve straight lines.
+
+# 4. What does the plot below tell you about the relationship between city and highway mpg? Why is coord_fixed() important? 
+# What does geom_abline() do?
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
+  geom_point() + 
+  geom_abline() +
+  coord_fixed()
+# geom_abline is a reference line. 
+# I think the plot tells us that overall this data has a positive trend and the values in hwy are slightly larger in comparison to their cty.
+
+
+
 
 
