@@ -391,6 +391,8 @@ ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
 # geom_abline is a reference line. 
 # I think the plot tells us that overall this data has a positive trend and the values in hwy are slightly larger in comparison to their cty.
 
+### 3.10 The layered grammar of graphics
+
 
 
 
