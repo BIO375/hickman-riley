@@ -89,6 +89,79 @@ ggplot(data = demo) +
 # This example gives the name "demo" to a data set
 # tribble is the command that helps create a chart of all of the data you are inserting (helps make it easier to read)
 # Then you can make a bar graph out of your data set
+# stat = "identity" is is making sure to insert the exact number (freq) from the dataset
+
+ggplot(data = diamonds) + 
+  stat_summary(
+    mapping = aes(x = cut, y = depth),
+    fun.ymin = min,
+    fun.ymax = max,
+    fun.y = median
+  )
+# You can also make a stat_summary that makes a pretty ugly figure in my opinion
+# The line extends the range of data and the dot shows the median
+
+### 3.8.  Position adjustments ####
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, colour = cut))
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = cut))
+
+# This is where you get to make the bar graphs look pretty
+# Everything starts the same as a normal ggplot, making sure to indicate geom_bar
+# color = <variable> --> outlines the bars in a color
+# color = fill --> fills in the bars with a color
+# fill = <variable> --> allow you to organize by color using a different variable than what is used to graph
+# fill = NA --> makes the filling completely clear/transparent
 
 
+### 3.9.  Coordinate systems ####
+ggplot(data = mpg, mapping = aes(x = class, y = hwy)) + 
+  geom_boxplot() +
+  coord_flip()
+# This is now showing how to make boxplots using the function geom_boxplot
+# When you add coord_flip() to the end of the command, it turns the boxplots horizontally
+
+install.packages("maps")
+library("maps")
+nz <- map_data("nz")
+
+ggplot(nz, aes(long, lat, group = group)) +
+  geom_polygon(fill = "white", colour = "black") +
+  coord_quickmap()
+# geom_polygon creates something where the start and end points are connected and the inside is filled with a color
+# fill = "  " --> chooses color for inside
+# color = "  " --> chooses color for border
+# coord_quickmap() --> maps projections with distortions (easy ecologist way of doing it, not super accurate)
+
+# If you ever don't want figure legends use --> show.legend = FALSE
+# If you ever want to change the width of a bar graph use --> width = 1
+
+bar <- ggplot(data = diamonds) + 
+  geom_bar(
+    mapping = aes(x = cut, fill = cut), 
+    show.legend = FALSE,
+    width = 1
+  ) + 
+  theme(aspect.ratio = 1) +
+  labs(x = NULL, y = NULL)
+
+bar + coord_flip()
+bar + coord_polar()
+
+# Using coord_flip() turns the bar graph horizontally
+# Using coord_polar shows polar coordinates of data
+
+
+### 3.10.  The layerd grammar of graphics ####
+
+# Template
+# ggplot(data = <DATA>) + 
+# <GEOM_FUNCTION>(
+#    mapping = aes(<MAPPINGS>),
+#    stat = <STAT>, 
+#    position = <POSITION>
+#  ) +
+#  <COORDINATE_FUNCTION> +
+#  <FACET_FUNCTION>
 
