@@ -12,7 +12,6 @@ if(!require(tidyverse)){install.packages("tidyverse")}
 
 birthrates <- read_csv("datasets/demos/birthrates.csv")
 
-birthdiff <- Birth_1982 - Birth_2000
 
 summ1982 <- birthrates %>%
   summarise(mean_Birth_1982 = mean(Birth_1982),
@@ -38,17 +37,24 @@ summbirthrates <- birthrates %>%
             var_birthdiff = var(Birth_1982 - Birth_2000),
             se_birthdiff = sd(Birth_1982 - Birth_2000)/sqrt(n()))
 
+ggplot(birthrates)+
+  geom_boxplot(aes(x = Birth_1982, y = Country), notch = FALSE, varwidth = TRUE)
+
 ### Scenario 2 ####
 
 data01 <- read_csv("datasets/abd/chapter12/chap12e3HornedLizards.csv")
-data01 <- data %>% slice(-105)
+
+#Adding a new variable to dataset 
+data01 <- mutate(data01, horndiff = Survival(living) - Survival(killed))
 
 
 summhornlength <- data01 %>%
   group_by(Survival) %>%
-  summarise(mean_horndiff = mean(squamosalHornLength),
-            median_horndiff = median(squamosalHornLength),
-            IQR_horndiff = IQR(squamosalHornLength),
-            sd_horndiff = sd(squamosalHornLength),
-            var_horndiff = var(squamosalHornLength),
-            se_horndiff = sd(squamosalHornLength)/sqrt(n()))
+  summarise(mean_horndiff = mean(living - killed),
+            median_horndiff = median(living - killed),
+            IQR_horndiff = IQR(living - killed),
+            sd_horndiff = sd(living - killed),
+            var_horndiff = var(living - killed),
+            se_horndiff = sd(living - killed)/sqrt(n()))
+
+
