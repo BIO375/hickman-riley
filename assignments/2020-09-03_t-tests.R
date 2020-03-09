@@ -1,4 +1,5 @@
 rm(list = ls())
+library(tidyverse)
 if(!require(Rmisc)){install.packages("Rmisc")}
 if(!require(DescTools)){install.packages("DescTools")}
 if(!require(boot)){install.packages("boot")}
@@ -12,49 +13,43 @@ if(!require(tidyverse)){install.packages("tidyverse")}
 
 birthrates <- read_csv("datasets/demos/birthrates.csv")
 
+birthrates <- birthrates %>%
+  mutate(difference = Birth_1982 - Birth_2000)
 
-summ1982 <- birthrates %>%
-  summarise(mean_Birth_1982 = mean(Birth_1982),
-            median_Birth_1982 = median(Birth_1982),
-            IQR_Birth_1982 = IQR(Birth_1982),
-            sd_Birth_1982 = sd(Birth_1982),
-            var_Birth_1982 = var(Birth_1982),
-            se_Birth_1982 = sd(Birth_1982)/sqrt(n()))
-
-summ2000 <- birthrates %>%
-  summarise(mean_Birth_2000 = mean(Birth_2000),
-            median_Birth_2000 = median(Birth_2000),
-            IQR_Birth_2000 = IQR(Birth_2000),
-            sd_Birth_2000 = sd(Birth_2000),
-            var_Birth_2000 = var(Birth_2000),
-            se_Birth_2000 = sd(Birth_2000)/sqrt(n()))
-
-summbirthrates <- birthrates %>%
-  summarise(mean_birthdiff = mean(Birth_1982 - Birth_2000),
-            median_birthdiff = median(Birth_1982 - Birth_2000),
-            IQR_birthdiff = IQR(Birth_1982 - Birth_2000),
-            sd_birthdiff = sd(Birth_1982 - Birth_2000),
-            var_birthdiff = var(Birth_1982 - Birth_2000),
-            se_birthdiff = sd(Birth_1982 - Birth_2000)/sqrt(n()))
+ggplot(data = birthrates) +
+  geom_histogram(mapping = aes(difference), binwidth = 1)
+ggplot(data = birthrates)+
+  geom_boxplot(mapping=aes(x="", y=difference))+
+  stat_summary(aes(x="", y=difference),
+               fun.y=mean,
+               colour="darkred",
+               geom="point",
+               shape=18,
+               size=3)
 
 ggplot(birthrates)+
-  geom_boxplot(aes(x = Birth_1982, y = Country), notch = FALSE, varwidth = TRUE)
+  geom_qq(mapping = aes(sample = difference))
+
+summ_births <- birthrates %>%
+  summarise(meand = mean(difference),
+            se_d = sd(difference)/sqrt(n()),
+            n = n())
+
 
 ### Scenario 2 ####
 
 data01 <- read_csv("datasets/abd/chapter12/chap12e3HornedLizards.csv")
-
-#Adding a new variable to dataset 
-data01 <- mutate(data01, horndiff = Survival(living) - Survival(killed))
+data01 <- data01 %>% 
+  slice(-105)
 
 
 summhornlength <- data01 %>%
   group_by(Survival) %>%
-  summarise(mean_horndiff = mean(living - killed),
-            median_horndiff = median(living - killed),
-            IQR_horndiff = IQR(living - killed),
-            sd_horndiff = sd(living - killed),
-            var_horndiff = var(living - killed),
-            se_horndiff = sd(living - killed)/sqrt(n()))
+  summarise(mean = mean(squamosalHornLength),
+            median = median(squamosalHornLength),
+            sd = sd(squamosalHornLength),
+            var = var(squamosalHornLength),
+            se = sd(squamosalHornLength)/sqrt(n()))
+
 
 
