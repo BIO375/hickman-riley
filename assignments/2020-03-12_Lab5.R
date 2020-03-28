@@ -1,7 +1,7 @@
 ### Lab 5
 
 rm(list = ls())
-
+getwd()
 ### Install and load packages ####
 
 if(!require(Rmisc)){install.packages("Rmisc")}
@@ -18,9 +18,15 @@ tidyverse_update()
 
 earthspin <- read_csv("datasets/demos/earthspin.csv")
 
-# Use R to perform a one-sample t-test
+# One Sample t-test - This is two sided
+
 t.test(earthspin$Obliquity, 
        alternative = "two.sided", mu = 0, conf.level = 0.95)
 
+### Question 2: Blood Cholesterol ####
 
+heartattack <- read_csv("datasets/demos/HeartAttack_short.csv")
 
+# Start by looking at normality
+heartattack <- heartattack %>%
+  mutate(diff = afterImplant - beforeImplant)
