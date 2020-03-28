@@ -1,4 +1,4 @@
-# Lab 5
+### Lab 5
 
 rm(list = ls())
 
@@ -14,7 +14,13 @@ if(!require(tidyverse)){install.packages("tidyverse")}
 # Check for updates
 tidyverse_update()
 
-# R code for confidence interval
-# mean + c(-1, 1) *qt(1-alpha, df) *se
+### Question 1: Earth Spin Example ####
+
+earthspin <- read_csv("datasets/demos/earthspin.csv")
+
+# Use R to perform a one-sample t-test
+t.test(earthspin$Obliquity, 
+       alternative = "two.sided", mu = 0, conf.level = 0.95)
+
 
 
