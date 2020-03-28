@@ -25,8 +25,42 @@ t.test(earthspin$Obliquity,
 
 ### Question 2: Blood Cholesterol ####
 
-heartattack <- read_csv("datasets/demos/HeartAttack_short.csv")
+heart <- read_csv("datasets/demos/HeartAttack_short.csv", col_types = cols(group = col_character()))
 
 # Start by looking at normality
-heartattack <- heartattack %>%
-  mutate(diff = afterImplant - beforeImplant)
+heart <- heart %>%
+  group_by(group) %>%
+  mutate(diff = cholest - cholest)
+
+ggplot(heart) +
+  geom_histogram(aes(diff), binwidth = 10)
+
+ggplot(heart) +
+  geom_boxplot(aes(x = "", y = diff))+
+  stat_summary(aes(x = "", y = diff), 
+               fun.y=mean, 
+               colour="blue", 
+               fill = "blue",
+               geom="point", 
+               shape=21, 
+               size=3)
+
+# Two sample T-test
+t.test(heart$cholest, heart$cholest,
+       alternative = "two.sided", paired = TRUE, conf.level = 0.95)
+
+
+
+
+
+
+
+
+
+### Question 3 ####
+furness <- read_csv("datasets/quinn/chpt3/furness.csv")
+
+
+
+
+
