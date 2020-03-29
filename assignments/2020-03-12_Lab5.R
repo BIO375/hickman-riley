@@ -33,11 +33,13 @@ heart <- heart %>%
   mutate(diff = cholest - cholest)
 
 ggplot(heart) +
-  geom_histogram(aes(diff), binwidth = 10)
+  geom_histogram(aes(cholest), binwidth = 20)+
+  facet_wrap(~group)
+
 
 ggplot(heart) +
-  geom_boxplot(aes(x = "", y = diff))+
-  stat_summary(aes(x = "", y = diff), 
+  geom_boxplot(aes(x = group, y = cholest))+
+  stat_summary(aes(x = group, y = cholest), 
                fun.y=mean, 
                colour="blue", 
                fill = "blue",
@@ -46,14 +48,8 @@ ggplot(heart) +
                size=3)
 
 # Two sample T-test
-t.test(heart$cholest, heart$cholest,
+t.test(heart$cholest(1), heart$cholest(2),
        alternative = "two.sided", paired = TRUE, conf.level = 0.95)
-
-
-
-
-
-
 
 
 
