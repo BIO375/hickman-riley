@@ -28,9 +28,6 @@ t.test(earthspin$Obliquity,
 heart <- read_csv("datasets/demos/HeartAttack_short.csv", col_types = cols(group = col_character()))
 
 # Start by looking at normality
-heart <- heart %>%
-  group_by(group) %>%
-  mutate(diff = cholest - cholest)
 
 ggplot(heart) +
   geom_histogram(aes(cholest), binwidth = 20)+
@@ -48,10 +45,9 @@ ggplot(heart) +
                size=3)
 
 # Two sample T-test
-t.test(heart$cholest(1), heart$cholest(2),
-       alternative = "two.sided", paired = TRUE, conf.level = 0.95)
 
-
+t.test(heart$cholest~heart$group,data = heart, var.equal = TRUE,
+       alternative = "two.sided" , conf.level = 0.95)
 
 ### Question 3 ####
 furness <- read_csv("datasets/quinn/chpt3/furness.csv")
