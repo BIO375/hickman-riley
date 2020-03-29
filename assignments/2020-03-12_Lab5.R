@@ -60,6 +60,36 @@ t.test(heart$cholest, heart$cholest,
 ### Question 3 ####
 furness <- read_csv("datasets/quinn/chpt3/furness.csv")
 
+ggplot(furness) +
+  geom_histogram(aes(METRATE), binwidth = 20)+
+  facet_wrap(~SEX)
+
+ggplot(furness) +
+  geom_boxplot(aes(x = SEX, y = METRATE))+
+  stat_summary(aes(x = SEX, y = METRATE), 
+               fun=mean, 
+               colour="blue", 
+               fill = "blue",
+               geom="point", 
+               shape=21, 
+               size=3)
+
+# Female seems tobe a little right skewed
+# The range of the two groups is definitely not the same
+
+ggplot(furness)+
+  geom_qq(aes(sample = METRATE, color = SEX))
+
+#Two-sided test
+wilcox.test(METRATE ~ SEX, data = furness, alternative = "two.sided", conf.level = 0.95)
+
+
+### Question 4 ####
+
+elgar <- read_csv("datasets/quinn/chpt3/elgar.csv")
+
+
+
 
 
 
