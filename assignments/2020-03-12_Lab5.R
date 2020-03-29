@@ -33,7 +33,6 @@ ggplot(heart) +
   geom_histogram(aes(cholest), binwidth = 20)+
   facet_wrap(~group)
 
-
 ggplot(heart) +
   geom_boxplot(aes(x = group, y = cholest))+
   stat_summary(aes(x = group, y = cholest), 
@@ -43,6 +42,15 @@ ggplot(heart) +
                geom="point", 
                shape=21, 
                size=3)
+
+summ_heart <- heart %>%
+  group_by(group) %>% 
+  summarise(mean_cholest = mean(cholest),
+            sd_cholest = sd(cholest),
+            n_cholest = n())
+
+# Calculate the ratio between the standard deviations as a loose test of homoscedasticity
+ratio <-(max(summ_heart$sd_cholest))/(min(summ_heart$sd_cholest))
 
 # Two sample T-test
 
