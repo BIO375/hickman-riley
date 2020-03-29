@@ -21,7 +21,7 @@ earthspin <- read_csv("datasets/demos/earthspin.csv")
 # One Sample t-test - This is two sided
 
 t.test(earthspin$Obliquity, 
-       alternative = "two.sided", mu = 0, conf.level = 0.95)
+       alternative = "two.sided", mu = 23.4722, conf.level = 0.95)
 
 ### Question 2: Blood Cholesterol ####
 
