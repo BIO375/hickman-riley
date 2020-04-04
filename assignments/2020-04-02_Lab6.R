@@ -45,3 +45,26 @@ t.test(clearcuts$biomassChange,
 
 ### Problem 13-26 ####
 
+ZebraFinchBeaks <- read_csv("datasets/abd/chapter13/chap13q26ZebraFinchBeaks.csv")
+
+# Choose appropriate method and test whether femailes preferred one type of male over the other type.
+
+# group 1: fed extra carotenoids
+# group 2: fed a diet low in carotenoids
+
+# Alt: Preference was shown
+# Null: No significant preference was shown
+
+t.test(ZebraFinchBeaks$preference, 
+       alternative = "two.sided", mu = 0, conf.level = 0.95)
+
+# P values was P<0.05 so reject the null hypothesis and accept alterantive that preference was shown. 
+
+
+
+
+
+
+
+
+
