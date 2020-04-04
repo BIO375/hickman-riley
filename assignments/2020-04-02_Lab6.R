@@ -60,7 +60,30 @@ t.test(ZebraFinchBeaks$preference,
 
 # P values was P<0.05 so reject the null hypothesis and accept alterantive that preference was shown. 
 
+### Problem 2-16 on page 421 ####
 
+ZebraFishBoldness <- read_csv("datasets/abd/chapter03/chap03q22ZebraFishBoldness.csv")
+
+# A. With these data, estimate the magnitude of the effect of the mutation (difference in means) on the amount of time spent in aggressive activity. Put appropriate bounds on your estimate of the effect.
+
+#Alt: the two groups don't have the same mean time spent in aggressive activity
+#Null: the two groups have the same mean time spent in aggressive activity
+
+#Difference in means 
+
+summ_aggressive <- ZebraFishBoldness %>%
+  group_by(genotype) %>% 
+  summarise(mean_aggressive= mean(secondsAggressiveActivity),
+            sd_aggressive = sd(secondsAggressiveActivity),
+            n_aggressive = n())
+diff <- (max(summ_aggressive$mean_aggressive))-(min(summ_aggressive$mean_aggressive))
+
+# Mean of differences is 68.1
+
+t.test(secondsAggressiveActivity ~ genotype, data = ZebraFishBoldness, var.equal = TRUE,
+       alternative = "two.sided", conf.level = 0.95)
+
+#P<0.05 so reject null hypothesis and accept alternative that the two genotypes don't have the same mean time.
 
 
 
