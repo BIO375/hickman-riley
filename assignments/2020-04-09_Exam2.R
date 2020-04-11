@@ -34,6 +34,15 @@ library("abd")
 
 algae <- AlgaeCO2
 
+summ <- algae %>%
+  group_by(treatment) %>% 
+  summarise(mean_growth = mean(growthrate),
+            sd_growth = sd(growthrate),
+            n_growth = n())
+
+# Calculate the ratio between the standard deviations as a loose test of homoscedasticity
+ratio <-(max(summ$sd_growth))/(min(summ$sd_growth))
+
 ggplot(algae) +
   geom_histogram(aes(growthrate), binwidth = .5)+
   facet_wrap(~treatment)
