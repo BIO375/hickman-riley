@@ -47,6 +47,20 @@ anova(test1)
 summary(test1)
 
 ### Log transformation Anova Aldrin ####
+
+Jaffe <- mutate(Jaffe, log_aldrin = log(Aldrin + 1))
+
+test2 <- lm(log_aldrin~Depth, data = Jaffe)
+
+summ_logaldrin <- Jaffe %>%
+  group_by(Depth) %>% 
+  summarise(mean_logaldrin = mean(log_aldrin),
+            sd_logaldrin = sd(log_aldrin),
+            n_logaldrin = n())
+
+anova(test2)
+summary(test2)
+
         
 ### HCB Anova ####
 testHCB <- lm(HCB~Depth, data = Jaffe)
@@ -61,3 +75,9 @@ ratio_HCB <- (max(summ_HCB$sd_HCB)/(min(summ_HCB$sd_HCB)))
 
 anova(testHCB)
 summary(testHCB)
+
+### Tukey Kramer Honestly Significant Difference (HSD) ####
+
+
+
+
