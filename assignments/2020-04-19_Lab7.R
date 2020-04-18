@@ -29,6 +29,7 @@ ggplot(Jaffe, aes(x = Depth, y = Aldrin))+
   geom_boxplot() +
   theme_bw()
 
+### Aldrin Anova ####
 test1 <- lm(Aldrin~Depth, data = Jaffe)
 
 summ_aldrin <- Jaffe %>%
@@ -44,7 +45,19 @@ anova(test1)
 # p < 0.05. so from this we can tell that depth does play a role in aldrin levels
 
 summary(test1)
+
+### Log transformation Anova Aldrin ####
         
+### HCB Anova ####
+testHCB <- lm(HCB~Depth, data = Jaffe)
 
+summ_HCB <- Jaffe %>%
+  group_by(Depth) %>% 
+  summarise(mean_HCB = mean(HCB),
+            sd_HCB = sd(HCB),
+            n_HCB = n())
 
+ratio_HCB <- (max(summ_HCB$sd_HCB)/(min(summ_HCB$sd_HCB)))
 
+anova(testHCB)
+summary(testHCB)
