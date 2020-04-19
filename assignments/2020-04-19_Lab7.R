@@ -78,7 +78,6 @@ summary(testHCB)
 
 ### Tukey Kramer Honestly Significant Difference (HSD) ####
 
-
 test2_b <- aov(log_aldrin ~ Depth, Jaffe)
 TukeyHSD(test2_b)
 
