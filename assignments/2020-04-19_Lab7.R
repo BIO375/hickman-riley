@@ -48,7 +48,7 @@ summary(test1)
 
 ### Log transformation Anova Aldrin ####
 
-Jaffe <- mutate(Jaffe, log_aldrin = log(Aldrin + 1))
+Jaffe <- mutate(Jaffe, log_aldrin = log(Aldrin))
 
 test2 <- lm(log_aldrin~Depth, data = Jaffe)
 
