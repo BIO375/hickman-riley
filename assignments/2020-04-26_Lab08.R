@@ -37,6 +37,7 @@ ggplot(fiddlercrabfans) +
 ggplot(fiddlercrabfans)+
   geom_qq(aes(sample = bodyTemperature, color = crabType))
 #I think from these figures things appear to be normally distributed
+# IWith all of this being looked at, I don't think any assumptions are violated so I will proceed. 
 
 # anova
 model01 <- lm(bodyTemperature~crabType, data = fiddlercrabfans)
@@ -47,12 +48,19 @@ summary(model01)
 
 # I think that this problem would be considered a planned comparison 
 # I think this because before the experiment started, they knew they wanted to
-# compare temperatrues between the different groups.
+# compare temperatures between the different groups.
 
-# Planned comparison
-planned <- glht(model01, linfct = 
-                  mcp(crabType = c("female - intact male = 0",
-                                   "minor male removed - intact male = 0",
-                                   "major male removed - intact male = 0")))
-confint(planned)
-summary(planned)
+# I can't get planned comparisons to work in R. I think this is because I didn't get "multicomp" to download correctly
+# So I will do a tukey test instead
+
+model01_b <- aov(bodyTemperature ~ crabType, fiddlercrabfans)
+TukeyHSD(model01_b)
+
+# So all of this is looking at the mean rate of head gain between groups
+# For 4 of the comparisons, p < 0.05 meaning that we would reject the null hypohtesis that there is no difference between means
+# For  minor removed vs. inact male and major removed vs. inact male have p>0.05
+# This would cause us to fail to reject the null meaning that there is no significant difference between those groups.
+
+
+
+
