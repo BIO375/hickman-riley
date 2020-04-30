@@ -91,7 +91,7 @@ elgar <- read_csv("datasets/quinn/chpt3/elgar.csv")
 t.test(elgar$HORIZLIG, elgar$HORIZDIM, 
        alternative = "two.sided", paired = TRUE, conf.level = 0.95)
 
-
+### 10/10 code runs without breaking ####
 
 
 
