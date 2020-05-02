@@ -39,6 +39,12 @@ ggplot(caffeine) +
 
 ###Perform the Test ####
 
-
 model01 <- aov(half_life ~ group, caffeine)
+
+anova(model01)
+#This shows *** so there is at least a significant effect/difference between two groups
+
+summary(model01)
+
 TukeyHSD(model01)
+
