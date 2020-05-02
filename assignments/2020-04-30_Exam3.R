@@ -12,6 +12,13 @@ tidyverse_update()
 
 caffeine <- read_csv("datasets/demos/caffeine.csv") 
 
+# Null Hypotheses:
+# mean caffeine metabolism rate is not different between men and women without elevated progesterone
+# mean caffeine metabolism rate is not different between women without and with elevated progesterone
+
+# Predictor variable: group, categorical
+# Response variable: half life of caffeine concentration; continuous
+
 #I will be using a One way ANOVA statistical test 
 
 ###Test the assumptions####
@@ -45,6 +52,21 @@ anova(model01)
 #This shows *** so there is at least a significant effect/difference between two groups
 
 summary(model01)
+#This shows *** so there is at least a significant effect/difference between two groups
 
 TukeyHSD(model01)
+
+# Results
+# The male-high_prog and the norm_prog-high_prog comparisons show a p value less than 0.05
+# This means we would reject the null hypothsis that mean caffeine metabolism rate
+# is different no between women with elevated progesterone and women without elevated progesterone.
+# Basically, there is significant difference between groups mentioned above.
+
+# However, we would fail to reject the null hypothesis that mean caffeine metabolism rate is not different between
+# men and women with without elevated progesterone. The p value was greater than 0.79.
+# Basically, there is no significant difference between groups mentioned above.
+
+
+
+
 
