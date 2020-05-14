@@ -39,7 +39,7 @@ ggplot(data = insulation_plus)+
   geom_point(aes(x = leanness, y= .resid))
 
 
-# This plot does not look that great and nothing seems very linear about it. Very fan shaped
+# This plot does not look that great and nothing seems very linear about it. Very fan/cloud shaped
 # So I am going to do a transformation of the y variable (heat_loss). 
 # A transformation is warranted 
 
